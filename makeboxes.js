@@ -96,11 +96,6 @@ function reserveNumber() {
 }
 
 function startBackground() {
-  // don't crash phones
-  if (isMobile.any) {
-    return;
-  }
-
   var initBoxes = makeBoxes(INIT_COUNT);
   $('#container')
     .prepend(initBoxes)
@@ -131,7 +126,6 @@ function postInit() {
 
   $('#loading').fadeOut(2000, function() {
     $('.content').addClass('visible');
-
     window.setTimeout(function() {
       $('.content').addClass('bordered');
       window.setTimeout(function() {
@@ -147,7 +141,8 @@ function postInit() {
 
 $(function() {
   if (isMobile.any) {
-    alert('Please revisit from a computer for best experience.');
+    alert('Not phone-friendly; please revisit from a computer.');
+    return;
   }
 
   var date = new Date('2015-11-01T14:40:00');
