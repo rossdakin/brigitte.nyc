@@ -1,5 +1,6 @@
 var IMAGE_COUNT = 47; // 0-indexed filenames
-var MIN_WIDTH = 204 //($(window).width() / 3);
+var MIN_WIDTH = 204; //($(window).width() / 3);
+var MIN_LOAD_TIME = 2000;
 var INIT_COUNT = 12;
 var NEW_COUNT = 2;
 var reservedNumbers = {};
@@ -61,12 +62,6 @@ function makeBoxes(count) {
     var box = document.createElement('div');
     var n = fetchReservedNumber();
 
-    if (!n) {
-      // start over
-      clearReserveNumbers();
-      n = fetchReservedNumber();
-    }
-
     box.className = 'box size' +
       Math.ceil(Math.random() * 3) +
       Math.ceil(Math.random() * 2);
@@ -85,7 +80,8 @@ function clearReserveNumbers() {
 
 function reserveNumber() {
   if (Object.keys(reservedNumbers).length + 1 >= IMAGE_COUNT) {
-    return null;
+    // start over
+    clearReserveNumbers();
   }
 
   var i = null;
@@ -99,26 +95,67 @@ function reserveNumber() {
   return i;
 }
 
-$(function() {
-  preloadBoxes(INIT_COUNT, function() {
+var contentLoaded = false;
+function loadContent() {
+  if (contentLoaded) {
+    return;
+  }
+
+  contentLoaded = true;
+
+  $('.content-wrapper').fadeIn(1000);
+}
+
+var postInitCalled = false;
+function postInit() {
+  // idempotent for grins
+  if (postInitCalled) {
+    return;
+  }
+  postInitCalled = true;
+
+  $('#loading').fadeOut('slow', function() {
+
     var initBoxes = makeBoxes(INIT_COUNT);
     $('#container')
       .prepend(initBoxes)
       .nested({
         animate: true,
         animationOptions: {
-          speed: 100,
-          duration: 80
+          speed: 200,
+          complete: loadContent
         },
         minWidth: MIN_WIDTH
       })
       .nested('prepend', initBoxes);
 
-    preloadBoxes(NEW_COUNT)
+    preloadBoxes(NEW_COUNT);
     window.interval = window.setInterval(function() {
       var boxes = makeBoxes(NEW_COUNT);
       $('#container').prepend(boxes).nested('prepend', boxes);
       preloadBoxes(NEW_COUNT)
     }, 5000);
+  });
+}
+
+$(function() {
+  // we want to invoke postInit once preloaded AND min load time has elapsed
+
+  var preloaded = false;
+  var minLoadTimeElapsed = false;
+
+  // don't worry about canceling, just make postInit idempotent
+  window.setTimeout(function() {
+    minLoadTimeElapsed = true;
+    if (preloaded) {
+      postInit();
+    }
+  }, MIN_LOAD_TIME);
+
+  preloadBoxes(INIT_COUNT, function() {
+    preloaded = true;
+    if (minLoadTimeElapsed) {
+      postInit();
+    }
   });
 });

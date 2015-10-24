@@ -12,16 +12,22 @@
     <script src="makeboxes.js"></script>
   </head>
   <body>
+    <div id="loading">
+      <img id="runner" src="running.gif" alt="Loading" />
+    </div>
     <div id="outer-container">
       <div id="container"></div>
     </div>
     <div class="modal-backdrop"></div>
-    <div class="content-wrapper">
+    <div class="content-wrapper hide">
       <h1>Brigitte.NYC</h1>
       <div class="clock"></div>
     </div>
 
     <script type="text/javascript">
+      $(function() {
+        $('#runner').addClass('moving');
+      });
       var date = new Date('2015-11-01T14:30:00');
       var seconds = (date.getTime() - Date.now()) / 1000;
       var clock = $('.clock').FlipClock(seconds, {
