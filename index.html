@@ -27,6 +27,7 @@
     <script src="flipclock.min.js"></script>
     <script src="jquery.nested.js"></script>
     <script src="makeboxes.js"></script>
+    <script src="isMobile.min.js"></script>
   </head>
   <body>
     <div id="outer-container">
@@ -37,7 +38,7 @@
       <div class="content">
         <img id="be-amazing" src="be_amazing.png" alt="BE AMAZING" />
         <div class="hide clock"></div>
-        <p class="hide">We are all so incredibly excited for and proud of you, Brigitte — run like the wind.</p>
+        <p class="hide">We are all so incredibly excited for and proud of you, Brigitte — run like the wind!</p>
       </div>
     </div>
     <div id="loading">
@@ -45,21 +46,5 @@
       <img id="nyc" class="centered" src="nyc.jpg" alt="NYC" />
       <img id="runner" src="running.gif" alt="Loading" />
     </div>
-
-    <script type="text/javascript">
-      $(function() {
-        $('#nyc').fadeIn(1500, function() {
-          $('#bhb').fadeIn(1500, function() {
-            $('#runner').addClass('moving');
-          });
-        });
-      });
-      var date = new Date('2015-11-01T14:40:00');
-      var seconds = (date.getTime() - Date.now()) / 1000;
-      var clock = $('.clock').FlipClock(seconds, {
-        clockFace: 'DailyCounter',
-        countdown: true
-      });
-    </script>
   </body>
 </html>

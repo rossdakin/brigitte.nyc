@@ -96,6 +96,11 @@ function reserveNumber() {
 }
 
 function startBackground() {
+  // don't crash phones
+  if (isMobile.any) {
+    return;
+  }
+
   var initBoxes = makeBoxes(INIT_COUNT);
   $('#container')
     .prepend(initBoxes)
@@ -132,7 +137,7 @@ function postInit() {
       window.setTimeout(function() {
         $('.content').addClass('open');
         window.setTimeout(function() {
-          $('.clock').fadeIn(1200, startBackground);
+          $('.clock').fadeIn(1200);
           $('.content p').fadeIn(1200, startBackground);
         }, 1200);
       }, 800);
@@ -141,8 +146,24 @@ function postInit() {
 }
 
 $(function() {
-  // we want to invoke postInit once preloaded AND min load time has elapsed
+  if (isMobile.any) {
+    alert('Please revisit from a computer for best experience.');
+  }
 
+  var date = new Date('2015-11-01T14:40:00');
+  var seconds = (date.getTime() - Date.now()) / 1000;
+  $('.clock').FlipClock(seconds, {
+    clockFace: 'DailyCounter',
+    countdown: true
+  });
+
+  $('#nyc').fadeIn(1500, function() {
+    $('#bhb').fadeIn(1500, function() {
+      $('#runner').addClass('moving');
+    });
+  });
+
+  // we want to invoke postInit once preloaded AND min load time has elapsed
   var preloaded = false;
   var minLoadTimeElapsed = false;
 
