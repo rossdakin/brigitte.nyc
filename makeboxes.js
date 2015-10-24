@@ -1,7 +1,7 @@
 var IMAGE_COUNT = 47; // 0-indexed filenames
 var MIN_WIDTH = 183;
 var MIN_LOAD_TIME = 10000;
-var INIT_COUNT = 12;
+var INIT_COUNT = 15;
 var NEW_COUNT = 2;
 var reservedNumbers = {};
 var preloadedNumbers = [];
@@ -95,15 +95,25 @@ function reserveNumber() {
   return i;
 }
 
-var contentLoaded = false;
-function loadContent() {
-  if (contentLoaded) {
-    return;
-  }
+function startBackground() {
+  var initBoxes = makeBoxes(INIT_COUNT);
+  $('#container')
+    .prepend(initBoxes)
+    .nested({
+      animate: true,
+      animationOptions: {
+        speed: 200
+      },
+      minWidth: MIN_WIDTH
+    })
+    .nested('prepend', initBoxes);
 
-  contentLoaded = true;
-
-  $('.content-wrapper').fadeIn(2500);
+  preloadBoxes(NEW_COUNT);
+  window.interval = window.setInterval(function() {
+    var boxes = makeBoxes(NEW_COUNT);
+    $('#container').prepend(boxes).nested('prepend', boxes);
+    preloadBoxes(NEW_COUNT)
+  }, 6000);
 }
 
 var postInitCalled = false;
@@ -115,25 +125,17 @@ function postInit() {
   postInitCalled = true;
 
   $('#loading').fadeOut(2000, function() {
-    var initBoxes = makeBoxes(INIT_COUNT);
-    $('#container')
-      .prepend(initBoxes)
-      .nested({
-        animate: true,
-        animationOptions: {
-          speed: 200,
-          complete: loadContent
-        },
-        minWidth: MIN_WIDTH
-      })
-      .nested('prepend', initBoxes);
+    $('.content').addClass('visible');
 
-    preloadBoxes(NEW_COUNT);
-    window.interval = window.setInterval(function() {
-      var boxes = makeBoxes(NEW_COUNT);
-      $('#container').prepend(boxes).nested('prepend', boxes);
-      preloadBoxes(NEW_COUNT)
-    }, 6000);
+    window.setTimeout(function() {
+      $('.content').addClass('bordered');
+      window.setTimeout(function() {
+        $('.content').addClass('open');
+        window.setTimeout(function() {
+          $('.clock').fadeIn(1200, startBackground);
+        }, 1200);
+      }, 800);
+    }, 2000);
   });
 }
 
