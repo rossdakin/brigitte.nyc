@@ -5,6 +5,27 @@ var NEW_COUNT = 2;
 var reservedNumbers = {};
 var preloadedNumbers = [];
 
+// https://gist.github.com/eikes/3925183
+function imgpreload(imgs, callback) {
+  "use strict";
+  var loaded = 0;
+  var images = [];
+  imgs = Object.prototype.toString.apply( imgs ) === '[object Array]' ? imgs : [imgs];
+  var inc = function() {
+    loaded += 1;
+    if ( loaded === imgs.length && callback ) {
+      callback( images );
+    }
+  };
+  for ( var i = 0; i < imgs.length; i++ ) {
+    images[i] = new Image();
+    images[i].onabort = inc;
+    images[i].onerror = inc;
+    images[i].onload = inc;
+    images[i].src = imgs[i];
+  }
+}
+
 function randomColor() {
   return '#' +
     Math.floor(Math.random() * 256).toString(16) +
@@ -17,15 +38,16 @@ function buildImagePath(n) {
 }
 
 function preloadBoxes(count, callback) {
-  var n = reserveNumber();
-  var image = new Image();
-  image.src = buildImagePath(n);
+  var paths = [];
 
-  preloadedNumbers.push(n);
-
-  if (callback) {
-    callback();
+  for (var i = 0; i < count; i++) {
+    var n = reserveNumber();
+    var path = buildImagePath(n)
+    paths.push(path);
+    preloadedNumbers.push(n);
   }
+
+  imgpreload(paths, callback)
 }
 
 function fetchReservedNumber() {
