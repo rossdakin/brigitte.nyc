@@ -133,6 +133,7 @@ function postInit() {
         $('.content').addClass('open');
         window.setTimeout(function() {
           $('.clock').fadeIn(1200, startBackground);
+          $('.content p').fadeIn(1200, startBackground);
         }, 1200);
       }, 800);
     }, 2000);
