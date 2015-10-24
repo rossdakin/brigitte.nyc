@@ -1,6 +1,6 @@
 var IMAGE_COUNT = 47; // 0-indexed filenames
-var MIN_WIDTH = 204; //($(window).width() / 3);
-var MIN_LOAD_TIME = 2000;
+var MIN_WIDTH = 183;
+var MIN_LOAD_TIME = 10000;
 var INIT_COUNT = 12;
 var NEW_COUNT = 2;
 var reservedNumbers = {};
@@ -103,7 +103,7 @@ function loadContent() {
 
   contentLoaded = true;
 
-  $('.content-wrapper').fadeIn(1000);
+  $('.content-wrapper').fadeIn(2500);
 }
 
 var postInitCalled = false;
@@ -114,8 +114,7 @@ function postInit() {
   }
   postInitCalled = true;
 
-  $('#loading').fadeOut('slow', function() {
-
+  $('#loading').fadeOut(2000, function() {
     var initBoxes = makeBoxes(INIT_COUNT);
     $('#container')
       .prepend(initBoxes)
@@ -134,7 +133,7 @@ function postInit() {
       var boxes = makeBoxes(NEW_COUNT);
       $('#container').prepend(boxes).nested('prepend', boxes);
       preloadBoxes(NEW_COUNT)
-    }, 5000);
+    }, 6000);
   });
 }
 

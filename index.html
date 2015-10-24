@@ -12,23 +12,32 @@
     <script src="makeboxes.js"></script>
   </head>
   <body>
-    <div id="loading">
-      <img id="runner" src="running.gif" alt="Loading" />
-    </div>
     <div id="outer-container">
       <div id="container"></div>
     </div>
     <div class="modal-backdrop"></div>
-    <div class="content-wrapper hide">
-      <h1>Brigitte.NYC</h1>
-      <div class="clock"></div>
+    <div class="content-wrapper">
+      <div class="content">
+        <h1 class="hide">BHB 2015 NYC</h1>
+        <div class="hide clock"></div>
+        <h2 class="hide">Be Amazing</h2>
+      </div>
+    </div>
+    <div id="loading">
+      <img id="bhb" src="bhb2015nyc.png" />
+      <img id="nyc" class="centered" src="nyc.jpg" alt="NYC" />
+      <img id="runner" src="running.gif" alt="Loading" />
     </div>
 
     <script type="text/javascript">
       $(function() {
-        $('#runner').addClass('moving');
+        $('#nyc').fadeIn(1500, function() {
+          $('#bhb').fadeIn(1500, function() {
+            $('#runner').addClass('moving');
+          });
+        });
       });
-      var date = new Date('2015-11-01T14:30:00');
+      var date = new Date('2015-11-01T14:40:00');
       var seconds = (date.getTime() - Date.now()) / 1000;
       var clock = $('.clock').FlipClock(seconds, {
         clockFace: 'DailyCounter',

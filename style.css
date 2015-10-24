@@ -10,6 +10,10 @@ body,
   z-index: 100;
 }
 
+#outer-container {
+  width: 110%;
+}
+
 .hide {
   display: none;
 }
@@ -60,7 +64,25 @@ body,
   height: 100%;
   width: 100%;
   position: relative;
+  text-align: center;
   z-index: 500;
+}
+
+#bhb {
+  display: none;
+  width: 40%;
+  margin-top: 6%;
+}
+
+#nyc {
+  display: none;
+  width: 90%;
+
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -60%);
 }
 
 #runner {
