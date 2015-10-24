@@ -1,19 +1,16 @@
-body {
-  background-color:#e1e1e1;
-  color:#fff;
-  font-family: Arial, sans-serif;
-  font-size:11px;
-  line-height: 14px;
-  padding:0px;
-  margin:0px;
+html,
+body,
+#outer-container {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .box {
-  background-color:#ff4499;
-  -moz-border-radius:3px;
-  -khtml-border-radius: 3px;
-  -webkit-border-radius:3px;
-  border-radius:3px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   -webkit-transition: all 300ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   -moz-transition: all 300ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
@@ -28,17 +25,13 @@ body {
   transition-property: left, right, top;
 }
 
-#container { background: red;}
-
-.size21, .size22, .size23, .twocols { background: #ccc }
-.size31, .size32, .size33, .threecols { background: #ff9999 }
-
-a.btn {
-  margin-right: 1px;
-  line-height: 30px;
-  height: 30px;
-  cursor: pointer;
-  display: inline-block;
-  width: 75px;
-  color: red;
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: #FFF;
+  opacity: .5;
+  height: 100%;
+  width: 100%;
 }
