@@ -1,6 +1,6 @@
 var IMAGE_COUNT = 47; // 0-indexed filenames
 var MIN_WIDTH = 204 //($(window).width() / 3);
-var INIT_COUNT = 15;
+var INIT_COUNT = 12;
 var NEW_COUNT = 2;
 var reservedNumbers = {};
 var preloadedNumbers = [];
@@ -62,8 +62,9 @@ function makeBoxes(count) {
     var n = fetchReservedNumber();
 
     if (!n) {
-      window.clearInterval(window.interval);
-      location.reload();
+      // start over
+      clearReserveNumbers();
+      n = fetchReservedNumber();
     }
 
     box.className = 'box size' +
@@ -77,6 +78,10 @@ function makeBoxes(count) {
 
   return boxes;
 };
+
+function clearReserveNumbers() {
+  reservedNumbers = {};
+}
 
 function reserveNumber() {
   if (Object.keys(reservedNumbers).length + 1 >= IMAGE_COUNT) {
