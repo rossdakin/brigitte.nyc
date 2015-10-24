@@ -3,6 +3,55 @@ var MIN_WIDTH = 183;
 var MIN_LOAD_TIME = 10000;
 var INIT_COUNT = 15;
 var NEW_COUNT = 2;
+var IMAGE_SIZES = {
+  '0': ['32'],
+  '1': 's',
+  '2': ['s', '12', '32'],
+  '3': ['s', '12'],
+  '4': ['s', '12', '32'],
+  '5': 's',
+  '6': 's',
+  '7': 's',
+  '8': ['s', '32'],
+  '9': '32',
+  '10': null,
+  '11': 's',
+  '12': ['s', '21', '32'],
+  '13': '12',
+  '14': null,
+  '15': ['s', '32'],
+  '16': ['32', 's'],
+  '17': ['12', 's'],
+  '18': 's',
+  '19': 's',
+  '20': ['s', '32'],
+  '21': ['22'],
+  '22': '31',
+  '23': 's',
+  '24': '12',
+  '25': 's',
+  '26': 's',
+  '27': 's',
+  '28': ['12', 's'],
+  '29': 's',
+  '30': ['32'],
+  '31': null,
+  '32': 's',
+  '33': '12',
+  '34': ['s', '12'],
+  '35': ['s', '12'],
+  '36': ['s', '12'],
+  '37': ['s', '32'],
+  '38': ['32', '31'],
+  '39': 's',
+  '40': ['s', '12'],
+  '41': ['s', '12'],
+  '42': ['12'],
+  '43': 's',
+  '44': ['12'],
+  '45': '32',
+  '46': ['32', 's']
+};
 var reservedNumbers = {};
 var preloadedNumbers = [];
 
@@ -61,11 +110,19 @@ function makeBoxes(count) {
   for (var i = 0; i < count; i++) {
     var box = document.createElement('div');
     var n = fetchReservedNumber();
+    var size = IMAGE_SIZES[n] ||
+        (Math.ceil(Math.random() * 3) + '' +
+         Math.ceil(Math.random() * 2));
 
-    box.className = 'box size' +
-      Math.ceil(Math.random() * 3) +
-      Math.ceil(Math.random() * 2);
+    size = Object.prototype.toString.apply(size) !== '[object Array]' ? size :
+      size[Math.floor(Math.random() * size.length)];
 
+    // let 's' be shorthand for square
+    if (size == 's') {
+      size = (['11', '22'])[Math.floor(Math.random() * 2)];
+    }
+
+    box.className = 'box size' + size;
     box.style.backgroundImage = 'url("' + buildImagePath(n) + '")';
 
     boxes.push(box);
