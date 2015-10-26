@@ -198,7 +198,7 @@ function postInit() {
 
 $(function() {
   if (isMobile.any) {
-    alert('Not phone-friendly; please revisit from a computer.');
+    alert('Not mobile-friendly; please revisit from a computer.');
     return;
   }
 
