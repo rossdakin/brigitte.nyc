@@ -203,8 +203,9 @@ $(function() {
   }
 
   var date = new Date('2015-11-01T14:40:00');
-  var seconds = (date.getTime() - Date.now()) / 1000;
+  var seconds = 14998;
   $('.clock').FlipClock(seconds, {
+    autoStart: false,
     clockFace: 'DailyCounter',
     countdown: true
   });
